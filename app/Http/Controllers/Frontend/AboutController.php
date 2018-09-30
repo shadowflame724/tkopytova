@@ -16,8 +16,7 @@ class AboutController extends Controller
     public function index()
     {
         return view('frontend.about')
-            ->withAboutActive(true)
-            ->withPortfolioCategories(PortfolioCategory::all());
+            ->withAboutActive(true);
     }
 
 }

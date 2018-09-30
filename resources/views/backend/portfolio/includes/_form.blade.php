@@ -82,7 +82,7 @@
                 </div>
                 @foreach($portfolio->photos as $photo)
                     <div class="col-md-2">
-                        <a href="{{ route('admin.portfolio.photo.destroy', $photo)}}"
+                        <a href="{{ route('admin.portfolio.photo.destroy', $photo->id)}}"
                            data-method="delete"
                            data-trans-button-cancel="@lang('buttons.general.cancel')"
                            data-trans-button-confirm="@lang('buttons.general.crud.delete')"

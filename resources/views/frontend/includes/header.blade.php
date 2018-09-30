@@ -17,7 +17,7 @@ flex-direction: column">
             </a>
         </div>
         <div class="container d-flex justify-content-between" style="height:30%">
-            @foreach($portfolioCategories as $portfolioCategory)
+            @foreach(\App\Models\PortfolioCategory::all() as $portfolioCategory)
                 <a href="{{ route('frontend.index', ['slug' => $portfolioCategory->slug]) }}"
                    class="navbar-brand d-flex align-items-center menu-item
                     @if(isset($activePortfolioCategory) && $activePortfolioCategory->id == $portfolioCategory->id)

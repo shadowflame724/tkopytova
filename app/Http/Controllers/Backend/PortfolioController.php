@@ -36,9 +36,9 @@ class PortfolioController extends Controller
     {
         return view('backend.portfolio.index')
             ->withPortfolios($this->portfolioRepository
-            ->with('portfolioCategory')
-            ->orderBy('id', 'asc')
-            ->paginate(25));
+                ->with('portfolioCategory')
+                ->orderBy('id', 'asc')
+                ->paginate(25));
     }
 
     /**
@@ -115,16 +115,16 @@ class PortfolioController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Photo $photo
+     * @param  $photoId
      * @return \Illuminate\Http\Response
      */
-    public function destroyphoto(Photo $photo)
+    public function destroyPhoto($photoId)
     {
-        dd($photo);
+        $photo = Photo::findOrFail((int)$photoId);
         $portfolio = $photo->portfolio;
-        $photo->delete();
-        Storage::delete('public/portfolio-photos/' . $photo->path);
+        if ($photo->delete()) {
+            Storage::delete('public/portfolio-photos/' . $photo->path);
+        }
 
         return redirect()->route('admin.portfolio.edit', $portfolio)->withFlashSuccess('Фото удалено');
     }

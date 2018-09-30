@@ -18,8 +18,7 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return view('frontend.contact')->withContactActive(true)
-            ->withPortfolioCategories(PortfolioCategory::all());
+        return view('frontend.contact')->withContactActive(true);
     }
 
     /**

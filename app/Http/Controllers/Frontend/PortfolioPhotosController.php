@@ -23,7 +23,6 @@ class PortfolioPhotosController extends Controller
 
         return view('frontend.portfolio-photos')
             ->withActivePortfolioCategory($portfolio->portfolioCategory)
-            ->withPortfolioCategories(PortfolioCategory::all())
             ->withPortfolio($portfolio);
     }
 }
