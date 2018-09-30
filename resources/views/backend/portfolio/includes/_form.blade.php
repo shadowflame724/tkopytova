@@ -49,6 +49,7 @@
             <div class="col-md-10">
                 {{ html()->file('image')
                     ->class('form-control')
+                    ->attribute('accept', '.png, .jpg, .jpeg')
                     ->autofocus() }}
             </div><!--col-->
         </div><!--form-group-->
@@ -60,6 +61,39 @@
                     <img src="{{ asset('storage/portfolio/thumb_'.$portfolio->path) }}" alt=""
                          style="max-height: 150px">
                 </div>
+            </div>
+        @endif
+        <div class="form-group row">
+            {{ html()->label('Фото')
+                ->class('col-md-2 form-control-label required')
+                ->for('photos') }}
+
+            <div class="col-md-10">
+                {{ html()->file('photos[]')
+                    ->multiple()
+                    ->attribute('accept', '.png, .jpg, .jpeg')
+                    ->class('form-control')
+                    ->autofocus() }}
+            </div><!--col-->
+        </div><!--form-group-->
+        @if(isset($portfolio) && $portfolio->photos)
+            <div class="form-group row">
+                <div class="col-md-2">
+                </div>
+                @foreach($portfolio->photos as $photo)
+                    <div class="col-md-2">
+                        <a href="{{ route('admin.portfolio.photo.destroy', $photo)}}"
+                           data-method="delete"
+                           data-trans-button-cancel="@lang('buttons.general.cancel')"
+                           data-trans-button-confirm="@lang('buttons.general.crud.delete')"
+                           data-trans-title="@lang('strings.backend.general.are_you_sure')"
+                           class="btn btn-danger"><i class="fas fa-trash" data-toggle="tooltip" data-placement="top"
+                                                     title="@lang('buttons.general.crud.delete')"></i></a>
+
+                        <img src="{{ asset('storage/portfolio-photos/'.$photo->path) }}" alt=""
+                             style="max-height: 150px">
+                    </div>
+                @endforeach
             </div>
         @endif
     </div><!--col-->

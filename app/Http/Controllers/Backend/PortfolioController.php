@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Photo;
 use App\Models\Portfolio;
 use App\Models\PortfolioCategory;
 use Illuminate\Http\Request;
@@ -58,7 +59,9 @@ class PortfolioController extends Controller
      */
     public function store(Request $request)
     {
-        $this->portfolioRepository->create($request->only('portfolio_category_id', 'title', 'description', 'image'));
+        $this->portfolioRepository->create($request->only(
+            'portfolio_category_id', 'title', 'description', 'image', 'photos'
+        ));
 
         return redirect()->route('admin.portfolio.index')->withFlashSuccess('Портфолио добавлено');
     }
@@ -71,9 +74,10 @@ class PortfolioController extends Controller
      */
     public function edit(Portfolio $portfolio)
     {
+//        dd($portfolio->photos);
         return view('backend.portfolio.edit')
             ->withPortfolioCategories(PortfolioCategory::pluck('title', 'id'))
-            ->withPortfolio($portfolio);
+            ->withPortfolio($portfolio->load('photos'));
     }
 
     /**
@@ -85,7 +89,9 @@ class PortfolioController extends Controller
      */
     public function update(Request $request, Portfolio $portfolio)
     {
-        $this->portfolioRepository->update($portfolio, $request->only('portfolio_category_id', 'title', 'description', 'image'));
+        $this->portfolioRepository->update($portfolio, $request->only(
+            'portfolio_category_id', 'title', 'description', 'image', 'photos'
+        ));
 
         return redirect()->route('admin.portfolio.index')->withFlashSuccess('Портфолио обновлено');
     }
@@ -105,5 +111,21 @@ class PortfolioController extends Controller
         event(new PortfolioDeleted($portfolio));
 
         return redirect()->route('admin.portfolio.index')->withFlashSuccess('Портфолио удалено');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Photo $photo
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyphoto(Photo $photo)
+    {
+        dd($photo);
+        $portfolio = $photo->portfolio;
+        $photo->delete();
+        Storage::delete('public/portfolio-photos/' . $photo->path);
+
+        return redirect()->route('admin.portfolio.edit', $portfolio)->withFlashSuccess('Фото удалено');
     }
 }

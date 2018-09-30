@@ -7,6 +7,8 @@ use App\Http\Controllers\Backend\DashboardController;
  */
 Route::redirect('/', '/admin/dashboard', 301);
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::delete('portfolio/photo', 'PortfolioController::class@destroyphoto')->name('portfolio.photo.destroy');
 
 Route::resource('portfolio', PortfolioController::class);
 Route::resource('portfolio-category', PortfolioCategoryController::class);
+

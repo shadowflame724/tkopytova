@@ -12,10 +12,16 @@ use App\Models\PortfolioCategory;
 class HomeController extends Controller
 {
     /**
+     *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index($slug = 'illustration')
     {
-        return view('frontend.index')->withPortfolioCategories(PortfolioCategory::all())->withPortfolios(Portfolio::all());
+        $category = PortfolioCategory::whereSlug($slug)->with('portfolios')->firstOrFail();
+
+        return view('frontend.index')
+            ->withActivePortfolioCategory($category)
+            ->withPortfolioCategories(PortfolioCategory::all())
+            ->withPortfolios($category->portfolios);
     }
 }

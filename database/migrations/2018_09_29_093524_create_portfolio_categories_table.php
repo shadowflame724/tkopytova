@@ -16,7 +16,8 @@ class CreatePortfolioCategoriesTable extends Migration
         Schema::create('portfolio_categories', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('title')->nullable();
+            $table->string('title');
+            $table->string('slug');
 
             $table->timestamps();
         });

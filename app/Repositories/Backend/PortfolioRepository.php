@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Backend;
 
+use App\Models\Photo;
 use App\Models\Portfolio;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
@@ -16,6 +17,9 @@ use Intervention\Image\Facades\Image;
  */
 class PortfolioRepository extends BaseRepository
 {
+    const PORTFOLIO_FOLDER = 'public\portfolio\\';
+    const PORTFOLIO_PHOTOS_FOLDER = 'public\portfolio-photos\\';
+
     /**
      * @return string
      */
@@ -36,7 +40,7 @@ class PortfolioRepository extends BaseRepository
         return DB::transaction(function () use ($data) {
 
             if ($data['image']->isValid()) {
-                $path = $this->saveImg($data['image']);
+                $path = $this->saveImg($data['image'], self::PORTFOLIO_FOLDER);
             } else {
                 throw new GeneralException('Невалидное изображение портфолио. Пожалуйста, попробуйте другое.');
             }
@@ -47,6 +51,17 @@ class PortfolioRepository extends BaseRepository
                 'description' => $data['description'],
                 'path' => $path
             ]);
+
+            if (isset($data['photos']) && $this->count($data['photos'])) {
+                foreach ($data['photos'] as $photo) {
+                    $path = $this->saveImg($photo, self::PORTFOLIO_PHOTOS_FOLDER, false);
+
+                    Photo::create([
+                        'portfolio_id' => $portfolio->id,
+                        'path' => $path
+                    ]);
+                }
+            }
 
             if ($portfolio) {
                 event(new PortfolioCreated($portfolio));
@@ -76,9 +91,20 @@ class PortfolioRepository extends BaseRepository
                     Storage::delete('public/portfolio/' . $portfolio->path);
                     Storage::delete('public/portfolio/thumb_' . $portfolio->path);
 
-                    $portfolio->path = $this->saveImg($data['image']);
+                    $portfolio->path = $this->saveImg($data['image'], self::PORTFOLIO_FOLDER);
                 } else {
                     throw new GeneralException('Невалидное изображение портфолио. Пожалуйста, попробуйте другое.');
+                }
+            }
+
+            if (isset($data['photos']) && $this->count($data['photos'])) {
+                foreach ($data['photos'] as $photo) {
+                    $path = $this->saveImg($photo, self::PORTFOLIO_PHOTOS_FOLDER, false);
+
+                    Photo::create([
+                        'portfolio_id' => $portfolio->id,
+                        'path' => $path
+                    ]);
                 }
             }
 
@@ -97,14 +123,15 @@ class PortfolioRepository extends BaseRepository
         });
     }
 
-    private function saveImg($image)
+    private function saveImg($image, $folder, $makeThumb = true)
     {
         if ($image->isValid()) {
             $name = uniqid() . '.' . $image->extension();
-            $image->storeAs('public/portfolio', $name);
-            $thumb = Image::make($image)->fit(300);
-
-            Storage::put('public\portfolio\thumb_' . $name, (string)$thumb->encode());
+            $image->storeAs($folder, $name);
+            if ($makeThumb) {
+                $thumb = Image::make($image)->fit(300);
+                Storage::put($folder . 'thumb_' . $name, (string)$thumb->encode());
+            }
         } else {
             throw new GeneralException('Невалидное изображение портфолио. Пожалуйста, попробуйте другое.');
         }
