@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "Stolz";
+    src: url('/fonts/stolz.otf');
+}
+
 :root {
     --jumbotron-padding-y: 3rem;
 }
@@ -55,4 +60,14 @@ footer p {
     background-image: url("/../img/frontend/header_background.jpg");
     background-size: 100% 100%;
     background-repeat: no-repeat;
+}
+
+@media only screen and (max-width: 600px) {
+    .header-bg {
+        background-image: url("/../img/frontend/header_background_mobile.jpg");
+    }
+}
+
+header {
+    font-family: "Stolz";
 }

@@ -1,5 +1,5 @@
 <header>
-    <div class="navbar navbar-dark header-bg" style="height: 250px;
+    <div class="navbar navbar-dark header-bg" style="height: 20vh;
     justify-content: flex-start;
          align-items: flex-start;
 flex-direction: column">
