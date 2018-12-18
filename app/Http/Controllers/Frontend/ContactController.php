@@ -18,7 +18,11 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return view('frontend.contact')->withContactActive(true);
+        $headerImg = 'header_background.jpg';
+
+        return view('frontend.contact')
+            ->withHeaderImg($headerImg)
+            ->withContactActive(true);
     }
 
     /**

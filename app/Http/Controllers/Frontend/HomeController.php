@@ -18,9 +18,12 @@ class HomeController extends Controller
     public function index($slug = 'illustration')
     {
         $category = PortfolioCategory::whereSlug($slug)->with('portfolios')->firstOrFail();
+        $headerImg = 'header_background.jpg';
+        if(isset($category) && $category->slug == 'painting') $headerImg = 'painting_header.png';
 
         return view('frontend.index')
             ->withActivePortfolioCategory($category)
+            ->withHeaderImg($headerImg)
             ->withPortfolios($category->portfolios);
     }
 }

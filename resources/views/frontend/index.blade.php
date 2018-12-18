@@ -13,7 +13,7 @@
                             ]) }}">
                                 <img class="card-img-top"
                                      data-src="{{ asset('storage/portfolio/thumb_'.$portfolio->path) }}"
-                                     alt="{{ $portfolio->title }}" style="height: 225px; width: 100%; display: block;"
+                                     alt="{{ $portfolio->title }}" style="max-height: 100%; width: 100%; display: block;"
                                      src="{{ asset('storage/portfolio/thumb_'.$portfolio->path) }}"
                                      data-holder-rendered="true">
                             </a>

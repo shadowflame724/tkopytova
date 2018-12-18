@@ -1,14 +1,11 @@
 <header>
-    <div class="navbar navbar-dark header-bg" style="height: 20vh;
-    justify-content: flex-start;
-         align-items: flex-start;
-flex-direction: column">
+    <div class="header-container navbar navbar-dark header-bg" style="background-image: url('/img/frontend/{{$headerImg}}')">
         <div class="container d-flex justify-content-center" style="height:30%">
-            <a href="{{ route('frontend.index') }}" class="navbar-brand d-flex align-items-center menu-item">
+            <a id="title" href="{{ route('frontend.index') }}" class="navbar-brand d-flex align-items-center menu-item">
                 <h1>Tetiana Kopytova</h1>
             </a>
         </div>
-        <div class="container d-flex justify-content-center" style="height:10%">
+        <div class="container d-flex justify-content-center" id="horse_lover" style="height:10%">
             <a href="{{ route('frontend.index') }}" class="navbar-brand d-flex align-items-center menu-item">
                 <span>artist, dreamer, horselover</span>
                 <img class="header-heart" src="/img/frontend/header_heart.png" alt="" style="

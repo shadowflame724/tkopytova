@@ -20,9 +20,13 @@ class PortfolioPhotosController extends Controller
         $portfolio = Portfolio::whereSlug($portfolioSlug)
             ->with('photos', 'portfolioCategory')
             ->firstOrFail();
+        $headerImg = 'header_background.jpg';
+        $category = $portfolio->portfolioCategory;
+        if(isset($category) && $category->slug == 'painting') $headerImg = 'painting_header.png';
 
         return view('frontend.portfolio-photos')
-            ->withActivePortfolioCategory($portfolio->portfolioCategory)
+            ->withActivePortfolioCategory($category)
+            ->withHeaderImg($headerImg)
             ->withPortfolio($portfolio);
     }
 }

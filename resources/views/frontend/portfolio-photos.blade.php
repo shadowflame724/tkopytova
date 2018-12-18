@@ -26,7 +26,7 @@
                             <div class="card mb-12 box-shadow">
                                 <img class="card-img-top"
                                      data-src="{{ asset('storage/portfolio-photos/'.$photo->path) }}"
-                                     alt="{{ $portfolio->title }}" style="max-height: 100%; display: block;"
+                                     alt="{{ $portfolio->title }}" style="max-height: 100%; object-fit: contain;"
                                      src="{{ asset('storage/portfolio-photos/'.$photo->path) }}"
                                      data-holder-rendered="true">
                             </div>

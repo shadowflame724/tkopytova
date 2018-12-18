@@ -147,5 +147,10 @@ main {
 }
 
 .portfolio-container img:hover {
-    transform: scale(1.1); 
+    transform: scale(1.1);
+}
+
+.portfolio-photo-img {
+    max-height: 100%;
+    object-fit: contain;
 }
