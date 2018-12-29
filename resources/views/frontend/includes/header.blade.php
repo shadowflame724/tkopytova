@@ -7,13 +7,19 @@
         </div>
         <div class="container d-flex justify-content-center" id="horse_lover" style="height:10%">
             <a href="{{ route('frontend.index') }}" class="navbar-brand d-flex align-items-center menu-item">
-                <span>artist, dreamer, horselover</span>
+                <span>illustrator, artist, dreamer</span>
                 <img class="header-heart" src="/img/frontend/header_heart.png" alt="" style="
                 padding-left: 5px;
                 height: 20px">
             </a>
         </div>
         <div class="container d-flex justify-content-between" style="height:30%">
+            <a href="{{ route('frontend.for_sale') }}" class="navbar-brand d-flex align-items-center menu-item
+@if(isset($forSaleActive) && $forSaleActive)
+                    active
+@endif">
+                <strong>For sale</strong>
+            </a>
             @foreach(\App\Models\PortfolioCategory::all() as $portfolioCategory)
                 <a href="{{ route('frontend.index', ['slug' => $portfolioCategory->slug]) }}"
                    class="navbar-brand d-flex align-items-center menu-item

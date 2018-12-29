@@ -37,7 +37,7 @@ class PortfolioController extends Controller
         return view('backend.portfolio.index')
             ->withPortfolios($this->portfolioRepository
                 ->with('portfolioCategory')
-                ->orderBy('id', 'asc')
+                ->orderBy('id', 'DESC')
                 ->paginate(25));
     }
 
@@ -60,7 +60,7 @@ class PortfolioController extends Controller
     public function store(Request $request)
     {
         $this->portfolioRepository->create($request->only(
-            'portfolio_category_id', 'title', 'description', 'image', 'photos'
+            'portfolio_category_id', 'title', 'description', 'image', 'photos', 'for_sale'
         ));
 
         return redirect()->route('admin.portfolio.index')->withFlashSuccess('Портфолио добавлено');
@@ -74,10 +74,11 @@ class PortfolioController extends Controller
      */
     public function edit(Portfolio $portfolio)
     {
-//        dd($portfolio->photos);
         return view('backend.portfolio.edit')
             ->withPortfolioCategories(PortfolioCategory::pluck('title', 'id'))
-            ->withPortfolio($portfolio->load('photos'));
+            ->withPortfolio($portfolio->load(['photos' => function($query) {
+                $query->orderBy('order_by', 'ASC');
+            }]));
     }
 
     /**
@@ -89,9 +90,7 @@ class PortfolioController extends Controller
      */
     public function update(Request $request, Portfolio $portfolio)
     {
-        $this->portfolioRepository->update($portfolio, $request->only(
-            'portfolio_category_id', 'title', 'description', 'image', 'photos'
-        ));
+        $this->portfolioRepository->update($portfolio, $request->all());
 
         return redirect()->route('admin.portfolio.index')->withFlashSuccess('Портфолио обновлено');
     }

@@ -49,7 +49,8 @@ class PortfolioRepository extends BaseRepository
                 'portfolio_category_id' => $data['portfolio_category_id'],
                 'title' => $data['title'],
                 'description' => $data['description'],
-                'path' => $path
+                'path' => $path,
+                'for_sale' => $data['for_sale']
             ]);
 
             if (isset($data['photos']) && $this->count($data['photos'])) {
@@ -108,11 +109,19 @@ class PortfolioRepository extends BaseRepository
                 }
             }
 
+            foreach ($portfolio->photos as $photo) {
+                if (isset($data["photo_{$photo->id}_order_by"])) {
+                    $photo->order_by = $data["photo_{$photo->id}_order_by"];
+                    $photo->save();
+                }
+            }
+
             if ($portfolio->update([
                 'portfolio_category_id' => $data['portfolio_category_id'],
                 'title' => $data['title'],
                 'description' => $data['description'],
-                'path' => $portfolio->path
+                'path' => $portfolio->path,
+                'for_sale' => $data['for_sale']
             ])) {
                 event(new PortfolioUpdated($portfolio));
 

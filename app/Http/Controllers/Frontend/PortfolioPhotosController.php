@@ -18,7 +18,9 @@ class PortfolioPhotosController extends Controller
     public function index($categorySlug, $portfolioSlug)
     {
         $portfolio = Portfolio::whereSlug($portfolioSlug)
-            ->with('photos', 'portfolioCategory')
+            ->with(['photos' => function($query) {
+                $query->orderBy('order_by', 'ASC');
+            }, 'portfolioCategory'])
             ->firstOrFail();
         $headerImg = 'header_background.jpg';
         $category = $portfolio->portfolioCategory;

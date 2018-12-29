@@ -8,7 +8,8 @@ class Photo extends Model
 {
     protected $fillable = [
         'portfolio_id',
-        'path'
+        'path',
+        'order_by'
     ];
 
     public function portfolio()

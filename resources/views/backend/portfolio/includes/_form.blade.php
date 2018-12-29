@@ -53,6 +53,18 @@
                     ->autofocus() }}
             </div><!--col-->
         </div><!--form-group-->
+
+        <div class="form-group row">
+            {{ html()->label('For sale?')
+                ->class('col-md-2 form-control-label required')
+                ->for('for_sale') }}
+
+            <div class="col-md-2">
+                {{ html()->checkbox('for_sale')
+                    ->class('form-control')
+                    ->autofocus() }}
+            </div><!--col-->
+        </div><!--form-group-->
         @if(isset($portfolio) && $portfolio->path)
             <div class="form-group row">
                 <div class="col-md-2">
@@ -81,7 +93,7 @@
                 <div class="col-md-2">
                 </div>
                 @foreach($portfolio->photos as $photo)
-                    <div class="col-md-2">
+                    <div class="col-md-2 d-flex flex-column">
                         <a href="{{ route('admin.portfolio.photo.destroy', $photo->id)}}"
                            data-method="delete"
                            data-trans-button-cancel="@lang('buttons.general.cancel')"
@@ -91,7 +103,21 @@
                                                      title="@lang('buttons.general.crud.delete')"></i></a>
 
                         <img src="{{ asset('storage/portfolio-photos/'.$photo->path) }}" alt=""
-                             style="max-height: 150px">
+                             style="
+                             max-height: 150px;
+                             max-width: 100%;
+                             object-fit: contain;
+                                "
+                        >
+
+                        <div class="form-group row">
+                            <div class="col-md-10">
+                                {{ html()->text("photo_{$photo->id}_order_by")
+                                    ->class('form-control')
+                                    ->value($photo->order_by)
+                                    ->autofocus() }}
+                            </div><!--col-->
+                        </div><!--form-group-->
                     </div>
                 @endforeach
             </div>

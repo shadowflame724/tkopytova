@@ -17,7 +17,11 @@ class HomeController extends Controller
      */
     public function index($slug = 'illustration')
     {
-        $category = PortfolioCategory::whereSlug($slug)->with('portfolios')->firstOrFail();
+        $category = PortfolioCategory::whereSlug($slug)
+            ->with(['portfolios' => function($query) {
+                $query->orderBy('created_at', 'DESC');
+            }])
+            ->firstOrFail();
         $headerImg = 'header_background.jpg';
         if(isset($category) && $category->slug == 'painting') $headerImg = 'painting_header.png';
 

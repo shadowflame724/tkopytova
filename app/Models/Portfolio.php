@@ -15,7 +15,8 @@ class Portfolio extends Model
         'portfolio_category_id',
         'title',
         'description',
-        'path'
+        'path',
+        'for_sale'
     ];
 
     public function portfolioCategory()
