@@ -15,7 +15,7 @@ class AboutController extends Controller
      */
     public function index()
     {
-        $headerImg = 'header_background.jpg';
+        $headerImg = 'painting_header.png';
 
         return view('frontend.about')
             ->withHeaderImg($headerImg)

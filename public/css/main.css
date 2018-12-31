@@ -76,6 +76,7 @@ footer p {
 
     .header-container {
         justify-content: flex-start !important;
+        height: 10vh !important;
     }
 
     .menu-item.active {

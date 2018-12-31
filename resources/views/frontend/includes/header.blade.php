@@ -14,12 +14,6 @@
             </a>
         </div>
         <div class="container d-flex justify-content-between" style="height:30%">
-            <a href="{{ route('frontend.for_sale') }}" class="navbar-brand d-flex align-items-center menu-item
-@if(isset($forSaleActive) && $forSaleActive)
-                    active
-@endif">
-                <strong>For sale</strong>
-            </a>
             @foreach(\App\Models\PortfolioCategory::all() as $portfolioCategory)
                 <a href="{{ route('frontend.index', ['slug' => $portfolioCategory->slug]) }}"
                    class="navbar-brand d-flex align-items-center menu-item
@@ -29,6 +23,12 @@
                     <strong>{{ $portfolioCategory->title }}</strong>
                 </a>
             @endforeach
+                <a href="{{ route('frontend.for_sale') }}" class="navbar-brand d-flex align-items-center menu-item
+@if(isset($forSaleActive) && $forSaleActive)
+                        active
+@endif">
+                    <strong>For sale</strong>
+                </a>
             <a href="{{ route('frontend.about') }}" class="navbar-brand d-flex align-items-center menu-item
 @if(isset($aboutActive) && $aboutActive)
                     active

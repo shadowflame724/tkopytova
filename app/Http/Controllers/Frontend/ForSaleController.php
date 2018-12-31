@@ -15,7 +15,7 @@ class ForSaleController extends Controller
      */
     public function index()
     {
-        $headerImg = 'header_background.jpg';
+        $headerImg = 'painting_header.png';
         $portfolios = Portfolio::where('for_sale', 1)
             ->with('portfolioCategory')
             ->orderBy('created_at', 'DESC')

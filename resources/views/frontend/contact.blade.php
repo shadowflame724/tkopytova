@@ -9,7 +9,9 @@
                 <div class="col-md-12">
                     <div class="row d-flex flex-column about-container justify-content-center align-items-center">
                         <div class="about-image-container d-flex justify-content-center">
-                            <img src="/img/frontend/contact.jpg" alt="my photo">
+                            <img src="/img/frontend/contact.jpg" alt="my photo" style="max-width: 100%!important;
+    object-fit: contain;
+">
                         </div>
                         <div class="about-description-container flex-column d-flex justify-content-center">
                             <div class="">
